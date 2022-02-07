@@ -28,7 +28,7 @@ do
 	name_clean=$(basename "$url" | sed -E "s/(.+)\.mp3#(.+)/\2-\1/g")
 	if [ -e "$dir_out_wav/$name_clean.wav" ]
 	then
-		error+="Already downloaded for $syllable"
+		error+="Already downloaded for $syllable;"
 		continue
 	else
 		result_wget=$(LANG=C wget "$url" -O "$dir_out_mp3/$name_clean.mp3" --no-clobber)
@@ -39,5 +39,5 @@ done
 
 if [ "$error" ]
 then
-	echo "$error"
+	echo "$error" | sed "s/;/\n/g"
 fi

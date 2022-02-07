@@ -22,14 +22,15 @@ file_path_csv="./zungdong.csv"
 url_audio="https://twblg.dict.edu.tw/holodict_new/audio/%s.mp3"
 file_path_audios_list="./jamdong_jatlaam.txt"
 
-sed_xlit_tones="y/́̀̂̄̍̋/235789/"
-sed_sub_syllablefinal_tone="s/([0-9])([a-z]+)/\2\1/g"
+tones="́̀̂̄̍̋"
+sed_sub_syllablefinal_tone="s/([$tones])([a-z]+)/\2\1/g"
+sed_xlit_tones="y/$tones/235789/"
 sed_sub_neutral_tone="s/--([a-z]+)[0-9]?/\10/g"
 sed_sub_1_4_tone="s/([ptkh])$/\14/g; s/([^0-9])$/\11/g"
 sed_xlit_2lc="y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"
 
 tl2ascii() {
-	cat | uconv -x any-nfd | sed -E "$sed_xlit_tones; $sed_sub_syllablefinal_tone"
+	cat | uconv -x any-nfd | sed -E "$sed_sub_syllablefinal_tone; $sed_xlit_tones"
 }
 
 if [ ! -e "$file_path_csv" ]
